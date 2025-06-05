@@ -14,12 +14,14 @@ const createCustomIcon = (type: string) => {
   };
   
   const color = typeColors[type as keyof typeof typeColors];
+  const isHQ = type === 'hq' || type === 'it';
   
   const iconHtml = `
     <div class="relative flex items-center justify-center">
+      ${isHQ ? `<div class="absolute w-12 h-12 bg-${type === 'hq' ? 'red' : 'green'}-500 rounded-full opacity-20 animate-ping"></div>` : ''}
       <div class="absolute w-8 h-8 bg-${type === 'hq' ? 'red' : type === 'it' ? 'green' : 'blue'}-500 rounded-full opacity-20 animate-ping"></div>
-      <div class="relative w-6 h-6 bg-white rounded-full shadow-lg flex items-center justify-center border-2" style="border-color: ${color}">
-        <div class="w-3 h-3 rounded-full" style="background-color: ${color}"></div>
+      <div class="relative ${isHQ ? 'w-8 h-8' : 'w-6 h-6'} bg-white rounded-full shadow-lg flex items-center justify-center border-2" style="border-color: ${color}">
+        <div class="${isHQ ? 'w-4 h-4' : 'w-3 h-3'} rounded-full" style="background-color: ${color}"></div>
       </div>
     </div>
   `;
@@ -27,8 +29,8 @@ const createCustomIcon = (type: string) => {
   return L.divIcon({
     html: iconHtml,
     className: 'custom-pin-icon',
-    iconSize: [32, 32],
-    iconAnchor: [16, 16],
+    iconSize: isHQ ? [40, 40] : [32, 32],
+    iconAnchor: isHQ ? [20, 20] : [16, 16],
   });
 };
 
@@ -47,10 +49,14 @@ const PinCluster = () => {
       spiderfyOnMaxZoom={true}
       iconCreateFunction={(cluster) => {
         const count = cluster.getChildCount();
+        const hasHQ = cluster.getAllChildMarkers().some(marker => 
+          marker.options.icon.options.className.includes('hq')
+        );
+        
         return L.divIcon({
           html: `
-            <div class="bg-white rounded-full shadow-lg border-2 border-blue-500 w-8 h-8 flex items-center justify-center">
-              <span class="text-sm font-semibold text-blue-500">${count}</span>
+            <div class="bg-white rounded-full shadow-lg border-2 ${hasHQ ? 'border-red-500' : 'border-blue-500'} w-8 h-8 flex items-center justify-center">
+              <span class="text-sm font-semibold ${hasHQ ? 'text-red-500' : 'text-blue-500'}">${count}</span>
             </div>
           `,
           className: 'custom-cluster-icon',
