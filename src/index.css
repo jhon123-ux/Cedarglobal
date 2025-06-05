@@ -3,5 +3,17 @@
 @tailwind utilities;
 
 .custom-tooltip .leaflet-tooltip-content {
-  @apply bg-white px-3 py-2 rounded-lg shadow-lg;
+  @apply bg-white px-3 py-2 rounded-lg shadow-lg border border-gray-200;
+}
+
+.leaflet-tooltip {
+  @apply border-0 shadow-none bg-transparent;
+}
+
+.custom-pin-icon {
+  @apply z-[500];
+}
+
+.custom-cluster-icon {
+  @apply z-[500];
 }
