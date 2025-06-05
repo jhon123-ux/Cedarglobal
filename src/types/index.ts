@@ -16,11 +16,5 @@ export interface LocationData {
   image?: string;
   link?: string;
   operatingHours?: string;
-}
-
-export interface MapContextType {
-  selectedLocation: LocationData | null;
-  setSelectedLocation: (location: LocationData | null) => void;
-  isPanelOpen: boolean;
-  setPanelOpen: (isOpen: boolean) => void;
+  capital?: string;
 }

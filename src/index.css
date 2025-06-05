@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.custom-tooltip .leaflet-tooltip-content {
+  @apply bg-white px-3 py-2 rounded-lg shadow-lg;
+}

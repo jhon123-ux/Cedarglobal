@@ -4,7 +4,6 @@ import MarkerClusterGroup from 'react-leaflet-cluster';
 import L from 'leaflet';
 import { useMapContext } from '../context/MapContext';
 import { locations } from '../data/locations';
-import { MapPin, Building2, PanelTop } from 'lucide-react';
 
 // Create custom icons for each type of location
 const createCustomIcon = (type: string) => {
@@ -68,7 +67,10 @@ const PinCluster = () => {
           }}
           keyboard={true}
         >
-          <Tooltip>{location.name}</Tooltip>
+          <Tooltip direction="top" offset={[0, -20]} className="custom-tooltip">
+            <div className="font-medium">{location.name}</div>
+            <div className="text-sm text-gray-600">{location.region}</div>
+          </Tooltip>
         </Marker>
       ))}
     </MarkerClusterGroup>
